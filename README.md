@@ -1,3 +1,2 @@
-# E-Commerce website with ReactJs, Tailwind CSS and Firebase
+# E-Commerce website with Redux, Firebase Authentication 
 
-[Website Link](https://e-commerce-597b0.web.app)
