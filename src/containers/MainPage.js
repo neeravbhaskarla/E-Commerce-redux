@@ -5,22 +5,13 @@ import ProductItem from '../components/ProductItem/ProductItem'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import {ClipLoader} from 'react-spinners'
-import {firestore,convertSnapShotToMap} from '../firebase/firebase.utils'
 import {connect} from 'react-redux'
-import {setItems} from '../redux/items/items.actions'
+import {fetchCollectionsStartAsync} from '../redux/items/items.actions'
 
-const MainPage=({items, setItems})=>{
+const MainPage=({items, fetchCollectionsStartAsync, isFetching, errorMessage})=>{
     useEffect(()=>{
-        const collectionRef = firestore.collection('store')
-        collectionRef.onSnapshot(async snapShot=>{
-            const collections = await convertSnapShotToMap(snapShot)
-            let items = {}
-            for(let i in collections){
-                items[collections[i].routeName] = collections[i]
-            }
-            setItems(items)
-        })
-    },[setItems])
+            fetchCollectionsStartAsync()
+    },[])
     let mainProducts = <ClipLoader size={100} css={`position: absolute; top:40%;`}/>
     if(items!==null){
         mainProducts = Object.keys(items).map(item=>{
@@ -57,6 +48,9 @@ const MainPage=({items, setItems})=>{
                 )
         })
     }
+    if(errorMessage!==undefined){
+        alert(errorMessage)
+    }
     return(
         <Fragment>
             <Hero/>
@@ -65,9 +59,11 @@ const MainPage=({items, setItems})=>{
     )
 }
 const mapStateToProps = state =>({
-    items: state.items.items
+    items: state.items.items,
+    isFetching: state.items.isFetching,
+    errorMessage: state.items.errorMessage
 })
 const mapDispatchToProps = dispatch =>({
-    setItems: (items)=> dispatch(setItems(items))
+    fetchCollectionsStartAsync: ()=> dispatch(fetchCollectionsStartAsync())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

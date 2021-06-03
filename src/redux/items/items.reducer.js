@@ -1,19 +1,26 @@
 import {ItemTypes} from './items.types'
 
 const INITIAL_STATE = {
-    items: null
+    items: null,
+    errorMessage: undefined
 }
 
-const itemsReducer = (state = INITIAL_STATE, actions) =>{
-    switch(actions.type){
-        case ItemTypes.SET_ITEMS:
-            return{
-                items: actions.payload
-            }
-        case ItemTypes.REMOVE_ITEMS:
-            return{
-                items: null
-            }
+const itemsReducer = (state = INITIAL_STATE, action) =>{
+    switch(action.type){
+        case ItemTypes.FETCH_ITEMS_START:
+            return {
+                ...state,
+            };
+        case ItemTypes.FETCH_ITEMS_SUCCESS:
+            return {
+                ...state,
+                items: action.payload
+            };
+        case ItemTypes.FETCH_ITEMS_FAIL:
+            return {
+                ...state,
+                errorMessage: action.payload
+            };
         default:
             return state
     }
