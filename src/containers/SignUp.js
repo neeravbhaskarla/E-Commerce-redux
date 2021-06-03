@@ -1,10 +1,8 @@
-import React, {useContext, useRef, useState} from 'react'
+import React, { useRef, useState} from 'react'
 import { useHistory} from 'react-router'
 import Spinner from 'react-spinners/ClipLoader'
-import {StoreContext} from '../store/use-context'
 import {auth, createUserProfileDocument} from '../firebase/firebase.utils'
 const SignUp = () =>{
-    const storeCtx = useContext(StoreContext)
     const history = useHistory()
     const nameRef = useRef(null)
     const emailRef = useRef(null)
@@ -26,12 +24,6 @@ const SignUp = () =>{
                 displayName: name,
                 address
             })
-            // setCurrentUser({
-            //     user: user.id,
-            //     displayName,
-            //     address
-            // })
-            storeCtx.setSignIn(true)
             history.push('/')
         } catch (error) {
             alert(error.message)

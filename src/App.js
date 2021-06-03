@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from 'react'
+import React,{ useEffect } from 'react'
 import {Route, Switch, BrowserRouter, Redirect} from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
@@ -11,22 +11,19 @@ import WishList from './containers/Wishlists';
 import Profile from './containers/Profile';
 import ProductDetail from './components/ProductDetail/ProductDetail'
 import CategoryDetail from './components/CategoryDetail/CategoryDetail'
-import {StoreContext} from './store/use-context'
 import SearchResults from './containers/SearchResults';
-import {auth, createUserProfileDocument, addCollectionsAndDocuments} from './firebase/firebase.utils'
-import {DUMMY_PRODUCTS} from './DummyData'
+import {auth, createUserProfileDocument} from './firebase/firebase.utils'
+// import {DUMMY_PRODUCTS} from './DummyData'
 import {connect} from 'react-redux'
 import {setUser} from './redux/users/user.actions'
 
 
 function App({setCurrentUser,user}) {
-  const storeCtx = useContext(StoreContext)
-  let unSubscribeUser = null
   useEffect(()=>{
+    let unSubscribeUser = null
     unSubscribeUser = auth.onAuthStateChanged(async user=>{
       if(user){
           const userRef = await createUserProfileDocument(user)
-          
           userRef.onSnapshot(snapShot=>{
                   setCurrentUser({
                       id: snapShot.id,
@@ -35,15 +32,9 @@ function App({setCurrentUser,user}) {
                 })
         }
         // addCollectionsAndDocuments('store',DUMMY_PRODUCTS)
-      
-      return () => unSubscribeUser()
-  })
-  },[])
-
-  useEffect(()=>{
-    storeCtx.fetchOrders()
-  },[storeCtx.userDetails])
-
+      })
+      return () => unSubscribeUser
+  },[setCurrentUser])
   let userRoutes = (
     <>
         <Route path='/' exact>

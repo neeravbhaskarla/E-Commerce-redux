@@ -61,6 +61,11 @@ const cartReducer = (state = INITIAL_STATE, action) =>{
                 totalPrice: (dupCart.length!==0)?dupCart.map(item=>item.price*item.quantity).reduce((sum,total)=>sum+total):0,
                 cart: state.cart
             }
+        case cartTypes.CLEAR_CART:
+            return{
+                cart: [],
+                totalPrice: 0
+            }
         default:
             return state
     }

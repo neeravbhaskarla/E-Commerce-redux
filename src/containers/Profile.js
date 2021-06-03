@@ -1,27 +1,17 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import UserProfile from '../assets/svg/profile.svg'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 import {Link, useHistory} from 'react-router-dom'
-import {StoreContext} from '../store/use-context'
 // import {auth} from '../firebase/firebase.utils'
 import {connect} from 'react-redux'
 import {logOutUser} from '../redux/users/user.actions'
 
-const Profile=({user,logOut})=>{
+const Profile=({user, orders, logOut})=>{
     const history = useHistory()
-    const storeCtx = useContext(StoreContext)
     const logOutHandler = () =>{
       logOut()
       history.push('/')
     }
-    let Orders=[]
-    for(let key in storeCtx.orders){
-       Orders.push(storeCtx.orders[key])
-    }
-    let OrdersLength = Orders.map(item=>(
-      item.items.length
-    ))
-    let Length = OrdersLength.length!==0?OrdersLength.reduce((s,t)=>s+t):0
     return(
         <>
         <main>
@@ -50,7 +40,7 @@ const Profile=({user,logOut})=>{
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
                         <div className="mr-4 p-3 text-center">
                           <span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
-                            {Length}
+                            {orders.length}
                           </span>
                           <span className="text-sm text-gray-500">Total Orders</span>
                         </div>
@@ -89,7 +79,8 @@ const Profile=({user,logOut})=>{
     )
 }
 const mapStateToProps=state=>({
-  user: state.user.currentUser
+  user: state.user.currentUser,
+  orders: state.orders.orders
 })
 const mapDispatchToProps=dispatch=>({
   logOut:()=>dispatch(logOutUser())

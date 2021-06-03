@@ -1,17 +1,18 @@
 import React, { Fragment, useEffect } from 'react'
 import {Link} from 'react-router-dom'
-import Hero from '../components/MainPage/Hero'
 import ProductItem from '../components/ProductItem/ProductItem'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import {ClipLoader} from 'react-spinners'
 import {connect} from 'react-redux'
-import {fetchCollectionsStartAsync} from '../redux/items/items.actions'
+import {fetchCollectionsItemsStartAsync} from '../redux/items/items.actions'
+import {fetchCollectionsOrdersStartAsync} from '../redux/orders/orders.actions'
 
-const MainPage=({items, fetchCollectionsStartAsync, isFetching, errorMessage})=>{
+const MainPage=({items, fetchCollectionsItemsStartAsync, fetchCollectionsOrdersStartAsync, userId, errorMessage})=>{
     useEffect(()=>{
-            fetchCollectionsStartAsync()
-    },[])
+        fetchCollectionsItemsStartAsync()
+        fetchCollectionsOrdersStartAsync(userId)
+    },[fetchCollectionsItemsStartAsync,fetchCollectionsOrdersStartAsync,userId])
     let mainProducts = <ClipLoader size={100} css={`position: absolute; top:40%;`}/>
     if(items!==null){
         mainProducts = Object.keys(items).map(item=>{
@@ -53,17 +54,18 @@ const MainPage=({items, fetchCollectionsStartAsync, isFetching, errorMessage})=>
     }
     return(
         <Fragment>
-            <Hero/>
             {mainProducts}
         </Fragment>
     )
 }
 const mapStateToProps = state =>({
+    userId: state.user.currentUser.id,
     items: state.items.items,
     isFetching: state.items.isFetching,
     errorMessage: state.items.errorMessage
 })
 const mapDispatchToProps = dispatch =>({
-    fetchCollectionsStartAsync: ()=> dispatch(fetchCollectionsStartAsync())
+    fetchCollectionsItemsStartAsync: ()=> dispatch(fetchCollectionsItemsStartAsync()),
+    fetchCollectionsOrdersStartAsync: (id)=> dispatch(fetchCollectionsOrdersStartAsync(id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

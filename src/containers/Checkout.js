@@ -1,16 +1,19 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import OrderItem from '../components/Checkout/CartItem'
 import {useHistory} from 'react-router'
-import {StoreContext} from '../store/use-context'
 import {connect} from 'react-redux'
-import {removeFromCart} from '../redux/cart/cart.actions'
+import {removeFromCart, clearCart} from '../redux/cart/cart.actions'
+import {addCollectionsAndDocuments} from '../firebase/firebase.utils'
 
-const Checkout = ({removeCart, cart, totalPrice}) =>{
-    const storeCtx = useContext(StoreContext)
+const Checkout = ({user, cart , removeCart, clearCart, totalPrice}) =>{
     const history = useHistory()
-    // let totalPrice  = (cart.length!==0)?cart.map(item=>item.price*item.quantity).reduce((sum,total)=>sum+total):0
     const placeOrderHandler =() =>{
-        storeCtx.placeOrder()
+        addCollectionsAndDocuments('orders', {
+            address: user.address,
+            items: cart,
+            userId: user.id
+        })
+        clearCart()
         history.push('/')
     }
     return (
@@ -62,9 +65,11 @@ const Checkout = ({removeCart, cart, totalPrice}) =>{
 
 const mapStateToProps = state =>({
     cart: state.cart.cart,
+    user: state.user.currentUser,
     totalPrice: state.cart.totalPrice
 })
 const mapDispatchToProps = dispatch =>({
     removeCart: (id)=>dispatch(removeFromCart(id)),
+    clearCart: () => dispatch(clearCart())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

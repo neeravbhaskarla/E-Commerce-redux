@@ -16,3 +16,6 @@ export const decItemQuantity = item =>({
     type: cartTypes.DEC_ITEM,
     payload: item
 })
+export const clearCart= () =>({
+    type: cartTypes.CLEAR_CART
+})
