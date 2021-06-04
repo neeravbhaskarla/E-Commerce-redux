@@ -19,7 +19,7 @@ const MainPage=({items, fetchCollectionsItemsStartAsync, fetchCollectionsOrdersS
                 return (
                         <div className="mt-10 mb-20" key={item}>
                             <div className="flex flex-col">
-                                <Link to={`/category/${items[item].title}`} className="font-poppins font-medium text-2xl text-gray-600 flex align-bottom justify-items-start mx-12">{items[item].title}</Link>
+                                <Link to={`/category/${items[item].title}`} className="font-poppins font-medium text-lg md:text-2xl text-gray-600 flex align-bottom justify-items-start mx-12">{items[item].title}</Link>
                                 <ScrollContainer className="flex flex-col items-center md:flex-row space-x-2 overflow-x-hidden my-3 px-20 mr-2">
                                     {Object.keys(items[item].items).slice(0,6).map(key=>{
                                                 const product = items[item].items[key]

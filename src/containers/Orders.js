@@ -5,7 +5,7 @@ const Orders = ({orders}) =>{
     return(
         <ul className="p-8 space-y-5 overflow-y-visible flex flex-col max-w-4xl md:ml-32">
             <div className="flex flex-row">
-                <h1 className="text-3xl font-semibold">Your Orders</h1>
+                <h1 className="text-lg text-center md:text-left md:text-3xl font-semibold">Your Orders</h1>
             </div>
             <div className="flex flex-col md:ml-8">
                 {orders.map(item=>(
