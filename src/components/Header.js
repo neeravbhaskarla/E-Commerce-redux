@@ -7,7 +7,6 @@ import ProfileIcon from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
 import {useHistory} from 'react-router'
 import {connect} from 'react-redux'
-import './Header.css'
 
 const Header=({cart, user})=>{
     const history = useHistory()
