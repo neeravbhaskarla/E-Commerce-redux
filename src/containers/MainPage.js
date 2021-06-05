@@ -13,14 +13,14 @@ const MainPage=({items, fetchCollectionsItemsStartAsync, fetchCollectionsOrdersS
         fetchCollectionsItemsStartAsync()
         fetchCollectionsOrdersStartAsync(userId)
     },[fetchCollectionsItemsStartAsync,fetchCollectionsOrdersStartAsync,userId])
-    let mainProducts = <ClipLoader size={100} css={`position: absolute; top:40%;`}/>
+    let mainProducts = <ClipLoader size={50} css={`position: absolute; top:40%; left:45%`}/>
     if(items!==null){
         mainProducts = Object.keys(items).map(item=>{
                 return (
                         <div className="mt-10 mb-20" key={item}>
                             <div className="flex flex-col">
                                 <Link to={`/category/${items[item].title}`} className="font-poppins font-medium text-lg md:text-2xl text-gray-600 flex align-bottom justify-items-start mx-12">{items[item].title}</Link>
-                                <ScrollContainer className="flex flex-col items-center md:flex-row space-x-2 overflow-x-hidden my-3 px-20 mr-2">
+                                <ScrollContainer className="flex flex-col items-center md:flex-row md:space-x-2 overflow-x-hidden my-3 md:px-20 md:mr-2">
                                     {Object.keys(items[item].items).slice(0,6).map(key=>{
                                                 const product = items[item].items[key]
                                                 return <div className="flex flex-col" key={product.id}>
