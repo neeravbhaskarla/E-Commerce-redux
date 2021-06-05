@@ -28,7 +28,7 @@ const ProductItem = ({cart, wishList, addCart, removeCart, addWishlist, removeWi
     }
     return(
             <div className="p-4">  
-                <div className="rounded-3xl overflow-hidden shadow-lg font-roboto space-y-1 flex-stretch flex-col pb-7 hover:bg-gray-50 transition-colors duration-700 cursor-pointer w-60 md:w-72">
+                <div className="rounded-3xl overflow-hidden shadow-lg font-roboto space-y-1 flex-stretch flex-col pb-7 hover:bg-gray-50 transition-colors duration-700 cursor-pointer w-64 md:w-80">
                     <div className="flex justify-center">
                         <Link to={`/product/${props.id}`}><img className="h-32 md:h-44" src={props.img}  alt=""/></Link>
                     </div>
@@ -40,7 +40,7 @@ const ProductItem = ({cart, wishList, addCart, removeCart, addWishlist, removeWi
                             {Array(props.rating+(5-props.rating)).fill().map((_,i)=>(i<props.rating)?<StarIcon key={i} style={{width: "20px"}}/>:<StarOutlineIcon key={i} style={{width: "20px"}}/>)}
                     </div>
                     <div className="px-8">
-                        <div className="pt-3 md:pt-4 pb-8 mx-2"> 
+                        <div className="pt-3 md:pt-4 mb-5 md:mb-8 mx-2"> 
                             <div className="flex flex-row justify-between items-center">
                                 <span className="text-xs md:text-sm text-gray-400 font-normal">{props.inStock?<p>In Stock</p>:<p className='text-red-500'>out of Stock</p>}</span>
                                 <span className="text-sm md:text-lg text-gray-500">${props.price}</span>
