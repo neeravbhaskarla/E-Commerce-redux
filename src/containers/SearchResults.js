@@ -9,7 +9,7 @@ const SearchResults = ({items}) =>{
     Object.keys(items).map(item=>(
         Object.keys(items[item].items).map(key=>{
             const product = items[item].items[key]
-            if(product.title.toLowerCase().split(/\s+/).includes(params.searchKey) || product.keywords.toLowerCase().split(/\s+/).includes(params.searchKey)){
+            if(product.title.toLowerCase().split(/\s+/).includes(params.searchKey.toLowerCase()) || product.keywords.toLowerCase().split(/\s+/).includes(params.searchKey.toLowerCase())){
                 mainProducts.push(
                     <ProductItem key={product.id} 
                         item={product}
